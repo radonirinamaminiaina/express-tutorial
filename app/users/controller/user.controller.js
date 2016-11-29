@@ -18,9 +18,27 @@ module.exports.getUserById = function() {
     });
 }
 module.exports.addUser = function() {
-    app.post("/user", function(req, res) {
+    app.get("/user", function(req, res) {
         console.log(req)
         //userModel.insert()
+        var dataUser = new userModel({
+            name: "Radonirina",
+            lastname: "Maminiaina",
+            phone: "+261334190828",
+            email: "rado93devweb2@gmail.com",
+            passowrd: "123456",
+            profil_pic: ["profile.jpg", "profile2.jpg", "profile3.jpg"],
+            role: ["admin", "validator"],
+            temporary_role: [],
+            absent: {
+                status: false,
+                count: 12
+            }
+        })
+        userModel.insert(function(err) {
+            if (err) throw err;
+            console.log("Data save successfully");
+        });
     });
 }
 module.exports.deleteUser = function() {

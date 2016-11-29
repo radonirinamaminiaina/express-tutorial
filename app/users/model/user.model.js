@@ -2,16 +2,28 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var userModel = new Schema({
-    name: String,
-    lastname: String,
+    name: {
+        type: String,
+        index: true,
+        required: true
+    },
+    lastname: {
+        type: String,
+        index: true,
+        required: true
+    },
     phone: String,
     email: {
         type: String,
         unique: true,
         index: true,
-        trim: true
+        trim: true,
+        required: true
     },
-    passowrd: String,
+    passowrd: {
+        type: String,
+        required: true
+    },
     profil_pic: [],
     role: [],
     temporary_role: [],

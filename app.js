@@ -4,5 +4,6 @@ var mongoose = require("mongoose");
 var user = require("./app/users/controller/user.controller");
 mongoose.connect('mongodb://localhost/e-commerce');
 
-console.log(user)
+
+user.addUser();
 app.listen(3000);
