@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpRequestService } from '../http-request.service';
 import { REST } from "../../config/config";
-
+declare var $: any;
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
@@ -28,6 +28,12 @@ export class UserListComponent implements OnInit {
     this._http.delete(REST.user + id).subscribe(
       (response) => {
         this.fetchUsers();
+        $(".user-removed").addClass("show-alert");
+        setTimeout(
+          () => {
+            $(".user-removed").removeClass("show-alert");
+          }, 3000
+        );
       }
     )
   }

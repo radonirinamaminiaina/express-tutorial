@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpRequestService } from '../http-request.service';
 import { REST } from "../../config/config";
+declare var $: any;
 @Component({
   selector: 'app-edit-user',
   templateUrl: './edit-user.component.html',
@@ -14,7 +15,7 @@ export class EditUserComponent implements OnInit {
     email: null,
     phone: null
   };
-  constructor(private _http: HttpRequestService, private _route: ActivatedRoute) { }
+  constructor(private _http: HttpRequestService, private _route: ActivatedRoute, private _router: Router) { }
 
   ngOnInit() {
     this._route.params.forEach(
@@ -38,7 +39,13 @@ export class EditUserComponent implements OnInit {
     }
     this._http.put(REST.user + userData._id, params).subscribe(
       (response) => {
-        console.log(response);
+        $(".user-updated").addClass("show-alert");
+        this._router.navigate(['/user']);
+        setTimeout(
+          () => {
+            $(".user-updated").removeClass("show-alert");
+          }, 3000
+        );
       }
     )
   }

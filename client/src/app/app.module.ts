@@ -8,13 +8,17 @@ import { UserListComponent } from './user-list/user-list.component';
 import { routing } from '../routing/routing';
 import { HomeComponent } from './home/home.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
+import { UserCreateComponent } from './user-create/user-create.component';
+import { FlashMessageComponent } from './flash-message/flash-message.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserListComponent,
     HomeComponent,
-    EditUserComponent
+    EditUserComponent,
+    UserCreateComponent,
+    FlashMessageComponent
   ],
   imports: [
     BrowserModule,

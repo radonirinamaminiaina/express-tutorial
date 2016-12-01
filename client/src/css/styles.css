@@ -19,3 +19,24 @@
 .left {
   float: left;
 }
+.create-form {
+  width: 950px;
+}
+.alert-dismissible {
+  width: 20%;
+  position: absolute;
+  bottom: -54px;
+  left: 20px;
+  z-index: 9999;
+  opacity: 0;
+  -webkit-transition: all ease 300ms;
+  -ms-transition: all ease 300ms;
+  transition: all ease 300ms;
+}
+.alert-dismissible.show-alert {
+  bottom: 20px;
+  opacity: 1;
+  -webkit-transition: all ease 300ms;
+  -ms-transition: all ease 300ms;
+  transition: all ease 300ms;
+}

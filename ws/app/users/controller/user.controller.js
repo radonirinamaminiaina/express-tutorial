@@ -31,23 +31,17 @@ module.exports.getUserById = function(req, res, next) {
     });
 }
 module.exports.addUser = function(req, res) {
-    var dataUser = new userModel({
-        name: "Radonirina 2",
-        lastname: "Maminiaina 2",
-        phone: "+261334190828",
-        email: "rado93devweb2@gmail.com",
-        passowrd: "123456",
-        profil_pic: ["profile.jpg", "profile2.jpg", "profile3.jpg"],
-        role: ["admin", "validator"],
-        temporary_role: [],
-        absent: {
-            status: false,
-            count: 12
-        }
-    })
+    var dataUser = new userModel(req.body);
     dataUser.save(function(err) {
-        if (err) throw err;
-        console.log("Data save successfully");
+        if (err) {
+            res.send(err);
+            return;
+        };
+        res.json({
+            status: "ok",
+            code: 200,
+            message: "User added"
+        })
     });
 }
 module.exports.deleteUser = function(req, res) {

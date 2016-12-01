@@ -1,0 +1,49 @@
+<form action="" class="form-wrapper create-form" #createForm="ngForm" novalidate>
+  <h2>Create new user</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">Name</span>
+        <input type="text" class="form-control" [(ngModel)]="userData.name" name="name" placeholder="Name" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">Lastname</span>
+        <input type="text" class="form-control" [(ngModel)]="userData.lastname" name="lastname" placeholder="Lastname" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">Email</span>
+        <input type="text" class="form-control" [(ngModel)]="userData.email" name="email" placeholder="Email" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">Mobile </span>
+        <input type="text" class="form-control" [(ngModel)]="userData.phone" name="phone" placeholder="Mobile" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">Password </span>
+        <input type="password" class="form-control" [(ngModel)]="userData.passowrd" name="password" placeholder="Mobile" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">Confirm password </span>
+        <input type="password" class="form-control" [(ngModel)]="userData.confirm" name="confirm-password" placeholder="Mobile" aria-describedby="basic-addon1" required>
+      </div>
+    </div>
+  </div>
+  <div class="text-center">
+    <button class="btn btn-primary" (click)="createUser(userData)" [disabled]="createForm.invalid">Create</button>
+  </div>
+</form>
+
