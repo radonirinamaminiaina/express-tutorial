@@ -30,6 +30,13 @@ module.exports.getUserById = function(req, res, next) {
         res.json(dataResponse);
     });
 }
+module.exports.findEmail = function(req, res, next) {
+    console.log("into findEmail")
+    userModel.findOne({email: req.body.email}, 'email', function(err, doc) {
+        console.log(doc);
+        res.json(doc);
+    })
+}
 module.exports.addUser = function(req, res) {
     var dataUser = new userModel(req.body);
     dataUser.save(function(err) {
@@ -67,6 +74,7 @@ module.exports.updateUser = function(req, res) {
         function(err, data) {
             if (err) {
                 res.send(err);
+                return;
             }
             res.json({
                 status: "ok",

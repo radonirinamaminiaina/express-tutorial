@@ -22,7 +22,8 @@ app.use(methodOverride());
 app.post(restConfig.prefix + "/user", user.addUser);
 app.get(restConfig.prefix + "/user", user.getUser);
 app.get(restConfig.prefix + "/user/:id", user.getUserById);
+app.post(restConfig.prefx + "/checkmail", user.findEmail);
 app.put(restConfig.prefix + "/user/:id", user.updateUser);
 app.delete(restConfig.prefix + "/user/:id", user.deleteUser);
 
-app.listen(5500);
+app.listen(3200);

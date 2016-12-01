@@ -1,5 +1,5 @@
 export const CONFIG = {
-    port: 5500,
+    port: 3200,
     baseUrl() {
         return window.location.protocol + "//" + window.location.hostname + ":" + this.port;
     }
