@@ -1,6 +1,6 @@
 <div class="panel panel-default">
   <!-- Default panel contents -->
-  <div class="panel-heading">Panel heading</div>
+  <div class="panel-heading">Lists Of users</div>
 
   <!-- Table -->
   <table class="table">
@@ -17,7 +17,7 @@
     <td>{{user.email}}</td>
     <td>{{user.phone}}</td>
     <td>
-      <a href="" class="btn btn-warning">Edit</a>
+      <a [routerLink]="['edit/' + user._id]" class="btn btn-warning">Edit</a>
       <a href="" class="btn btn-danger">Remove</a>
     </td>
   </tr>

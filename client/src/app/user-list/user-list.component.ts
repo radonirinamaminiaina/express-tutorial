@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpRequestService } from '../http-request.service';
+import { REST } from "../../config/config";
+
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
@@ -10,7 +12,7 @@ export class UserListComponent implements OnInit {
   constructor( private _http: HttpRequestService ) { }
 
   ngOnInit() {
-    this._http.get("http://localhost:5500/user").subscribe(
+    this._http.get(REST.user).subscribe(
       (response) => {
         this.userList = response.data;
       }

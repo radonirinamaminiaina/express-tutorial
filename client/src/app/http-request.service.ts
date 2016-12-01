@@ -2,13 +2,18 @@ import { Injectable } from '@angular/core';
 import { Http, Response, URLSearchParams } from "@angular/http";
 import { Observable } from "rxjs/Rx";
 import { Request } from "./request";
+import { CONFIG } from "../config/config";
 @Injectable()
 export class HttpRequestService {
 
   constructor(private _http: Http) { }
 
   get(url: string): Observable<Request> {
-    let doRequest = this._http.get(url).map(this.parseData).catch(this.handleError);
+    let doRequest = this._http.get(CONFIG.baseUrl() + url).map(this.parseData).catch(this.handleError);
+    return doRequest;
+  }
+  put(url: string, params: Object): Observable<Request> {
+    let doRequest = this._http.put(CONFIG.baseUrl() + url, params).map(this.parseData).catch(this.handleError);
     return doRequest;
   }
   /**

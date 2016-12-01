@@ -1,11 +1,9 @@
 var express = require("express");
 var userModel = require("../model/user.model");
-var cros = require("../../../config/header.js");
+var _ = require("lodash");
 
 var app = express();
-
-module.exports.getUser = function(req, res) {
-    cros(res);
+module.exports.getUser = function(req, res, next) {
     userModel.find({}, function(err, data) {
         if(err)
             throw err;
@@ -17,9 +15,19 @@ module.exports.getUser = function(req, res) {
         res.json(dataResponse);
     });
 }
-module.exports.getUserById = function() {
-    app.get("/user/:id", function(req, res) {
-        
+module.exports.getUserById = function(req, res, next) {
+    userModel.findById(req.params.id, function(err, data) {
+        if (err) {
+            res.render('error');
+            //res.status(404);
+            return;
+        }
+        var dataResponse = {
+            code: 200,
+            status: "ok",
+            data: data
+        };
+        res.json(dataResponse);
     });
 }
 module.exports.addUser = function(req, res) {
@@ -47,8 +55,20 @@ module.exports.deleteUser = function() {
 
     });
 }
-module.exports.updateUser = function() {
-    app.put("/user/:id", function(req, res) {
-
+module.exports.updateUser = function(req, res) {
+    userModel.findById(req.params.id, function(err, data) {
+        if (err)
+            res.send(err);
+        data = _.extend(data, req.body);
+        data.save(function(err) {
+            if (err) {
+                throw err;
+            }
+            res.json({
+                status: "ok",
+                code: 200,
+                message: "Data saved successfully"
+            })
+        });
     });
 }
