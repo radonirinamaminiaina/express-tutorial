@@ -12,9 +12,22 @@ export class UserListComponent implements OnInit {
   constructor( private _http: HttpRequestService ) { }
 
   ngOnInit() {
+    this.fetchUsers();
+  }
+
+  fetchUsers() {
     this._http.get(REST.user).subscribe(
       (response) => {
         this.userList = response.data;
+      }
+    );
+  }
+
+  deleteThis(id: String) {
+    console.log(id);
+    this._http.delete(REST.user + id).subscribe(
+      (response) => {
+        this.fetchUsers();
       }
     )
   }

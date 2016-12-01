@@ -16,6 +16,10 @@ export class HttpRequestService {
     let doRequest = this._http.put(CONFIG.baseUrl() + url, params).map(this.parseData).catch(this.handleError);
     return doRequest;
   }
+  delete(url: string): Observable<Request> {
+    let doRequest = this._http.delete(CONFIG.baseUrl() + url).map(this.parseData).catch(this.handleError);
+    return doRequest;
+  }
   /**
      * parseData
      * 

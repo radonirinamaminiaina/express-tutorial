@@ -50,25 +50,35 @@ module.exports.addUser = function(req, res) {
         console.log("Data save successfully");
     });
 }
-module.exports.deleteUser = function() {
-    app.delete("/user/:id", function() {
-
-    });
+module.exports.deleteUser = function(req, res) {
+    userModel.remove(
+        {_id: req.params.id}, 
+        function(err) {
+            if (err) {
+                res.send(err);
+            }
+            res.json({
+                status: "ok",
+                code: 200,
+                message: "Data deleted successfully"
+            })
+        }
+    );
 }
 module.exports.updateUser = function(req, res) {
-    userModel.findById(req.params.id, function(err, data) {
-        if (err)
-            res.send(err);
-        data = _.extend(data, req.body);
-        data.save(function(err) {
+    userModel.findOneAndUpdate(
+        { _id: req.params.id },
+        { $set: req.body },
+        { new: true },
+        function(err, data) {
             if (err) {
-                throw err;
+                res.send(err);
             }
             res.json({
                 status: "ok",
                 code: 200,
                 message: "Data saved successfully"
-            })
-        });
-    });
+            });
+        }
+    );
 }
