@@ -1,7 +1,6 @@
 var userModel = require("./user-collection.model");
 var _ = require("lodash");
 var crypto = require("crypto");
-var base64url = require("base64url");
 var jwt = require("jsonwebtoken");
 var encryptePassword = function(password, salt, callback) {
     console.log(salt)
