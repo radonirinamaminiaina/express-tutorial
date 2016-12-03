@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { UserCreateComponent } from './user-create/user-create.component';
 import { FlashMessageComponent } from './flash-message/flash-message.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { FlashMessageComponent } from './flash-message/flash-message.component';
     HomeComponent,
     EditUserComponent,
     UserCreateComponent,
-    FlashMessageComponent
+    FlashMessageComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
