@@ -100,7 +100,7 @@ module.exports.userLogin = function(req, res) {
                 require('crypto').randomBytes(25, function(err, buffer) {
                     //var token = base64url(buffer.toString('hex'));
                     //res.cookie("x-token", token, { maxAge: 5000, httpOnly: true })
-                    var token = jwt.sign({mail: doc.email}, "secretpass", {expiresIn: 60});
+                    var token = jwt.sign({mail: doc.email}, "secretpass", {expiresIn: 120});
                     doc = doc.toObject(doc);
                     doc.token = token;
                     res.json({

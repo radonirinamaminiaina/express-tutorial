@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         let getUser = JSON.parse(localStorage.getItem("user"));
         if(getUser) {
-            this.userData = getUser;
+            this.userData = getUser.data;
         }
         $(document).on("user", (e, data) => {
             console.log(data)
