@@ -8,6 +8,7 @@ function UserController() {
 UserController.prototype.init = function(app) {
     app.post(restConfig.prefix + "/user", userModel.addUser);
     app.post(restConfig.prefix + "/user/checkEmail", userModel.findEmail);
+    app.post(restConfig.prefix + "/user/login", userModel.userLogin);
     app.get(restConfig.prefix + "/user", userModel.getUser);
     app.get(restConfig.prefix + "/user/:id", userModel.getUserById);
     app.put(restConfig.prefix + "/user/:id", userModel.updateUser);

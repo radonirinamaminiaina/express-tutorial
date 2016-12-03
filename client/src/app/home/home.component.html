@@ -1,19 +1,35 @@
 <div class="row">
-  <div class="col-md-6">
+  <!--<div class="col-md-6">
     <div class="panel panel-default">
-      <!-- Default panel contents -->
+      <! Default panel contents 
       <div class="panel-heading">Manage your user</div>
       <div class="panel-body">
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt harum deleniti soluta beatae modi velit sapiente, magni dolore ab eos molestias vel nemo excepturi, similique architecto ipsam inventore cum blanditiis.</p>
       </div>
     </div>
-  </div>
-  <div class="col-md-6">
+  </div>-->
+  <div class="col-md-6 pull-right">
     <div class="panel panel-default">
       <!-- Default panel contents -->
-      <div class="panel-heading">Manage your product</div>
+      <div class="panel-heading">Login first</div>
       <div class="panel-body">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt harum deleniti soluta beatae modi velit sapiente, magni dolore ab eos molestias vel nemo excepturi, similique architecto ipsam inventore cum blanditiis.</p>
+        <form action="" class="form-wrapper" #loginForm="ngForm" novalidate>
+          <fieldset>
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">@</span>
+              <input type="text" class="form-control" [(ngModel)]="userLogin.email" name="email" placeholder="email" aria-describedby="basic-addon1" required>
+            </div>
+          </fieldset>
+          <fieldset>
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon1">?</span>
+              <input type="password" class="form-control" [(ngModel)]="userLogin.passowrd" name="password" placeholder="password" aria-describedby="basic-addon2" required>
+            </div>
+          </fieldset>
+          <div class="text-center">
+            <button class="btn btn-primary pull-right" [disabled]="loginForm.invalid" (click)="onLogin(userLogin)">Login</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

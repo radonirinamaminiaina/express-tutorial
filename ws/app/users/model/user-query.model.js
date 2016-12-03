@@ -1,8 +1,21 @@
 var userModel = require("./user-collection.model");
 var _ = require("lodash");
 var crypto = require("crypto");
-
+var base64url = require("base64url");
+var jwt = require("jsonwebtoken");
+var encryptePassword = function(password, salt, callback) {
+    console.log(salt)
+    crypto.pbkdf2(password, salt, 100000, 512, 'sha512', function(err, key) {
+        if(err)
+            throw err;
+        var hash = key.toString("hex");
+        callback(hash)
+    });
+}
 module.exports.getUser = function(req, res, next) {
+    var reqCookie = req.headers["x-token"];
+    var resCookie = req.cookies;
+    console.log(reqCookie, resCookie)
     userModel.find({}, function(err, data) {
         if(err)
             throw err;
@@ -55,10 +68,9 @@ module.exports.findEmail = function(req, res, next) {
     })
 }
 module.exports.addUser = function(req, res) {
-    var secret = "radonirinamaminiainaisafrontenddevelopper";
-    var hash = crypto.createHmac("sha256", secret).update(req.body.email).digest("hex");    
-    crypto.pbkdf2(req.body.passowrd, req.body.email, 100000, 512, 'sha512', function(err, key) {
+    encryptePassword(req.body.passowrd, req.body.email, function(hash) {
         req.body.passowrd = hash;
+        console.log(hash)
         var dataUser = new userModel(req.body);
         dataUser.save(function(err) {
             if (err) {
@@ -72,7 +84,35 @@ module.exports.addUser = function(req, res) {
             });
             
         });
-    })
+    });
+}
+module.exports.userLogin = function(req, res) {
+    encryptePassword(req.body.passowrd, req.body.email, function(hash) {
+        userModel.findOne({ email: req.body.email, passowrd: hash } , {passowrd: 0}, function(err, doc) {
+            if(err)
+                throw err;
+            if(!doc) {
+                res.json({
+                    code: 404,
+                    status: "ok",
+                    message: "user not found"
+                });
+            } else {
+                require('crypto').randomBytes(25, function(err, buffer) {
+                    //var token = base64url(buffer.toString('hex'));
+                    //res.cookie("x-token", token, { maxAge: 5000, httpOnly: true })
+                    var token = jwt.sign({mail: doc.email}, "secretpass", {expiresIn: 60});
+                    doc = doc.toObject(doc);
+                    doc.token = token;
+                    res.json({
+                        code: 200,
+                        status: "ok",
+                        data: doc
+                    });
+                });
+            }
+        })
+    });
 }
 module.exports.deleteUser = function(req, res) {
     userModel.remove(

@@ -6,5 +6,6 @@ export const CONFIG = {
 }
 export const REST = {
     user: "/api/user/",
-    checkmail: "/api/user/checkEmail"
+    checkmail: "/api/user/checkEmail",
+    login: "/api/user/login"
 }
