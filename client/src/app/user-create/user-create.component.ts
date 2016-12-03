@@ -20,6 +20,9 @@ export class UserCreateComponent implements OnInit {
     confirm: null
   }
   message: string;
+  hasErrorClass: boolean;
+  isValidEntry: boolean;
+  isOnFocus: boolean;
   constructor(private _http: HttpRequestService, private _router: Router) { }
 
   ngOnInit() {
@@ -39,5 +42,35 @@ export class UserCreateComponent implements OnInit {
         )
       }
     );
+  }
+  checkDuplicateEntry(event, email) {
+    let emailPattern = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|immo|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/;
+    if(emailPattern.test(event.target.value)) {
+      this._http.post(REST.checkmail, {email: email}).subscribe(
+        (result) => {
+          console.log(result);
+          if(result.code === 409) {
+            this.hasErrorClass = true;
+            this.isValidEntry = false;
+          } else {
+            this.hasErrorClass = false;
+            this.isValidEntry = true;
+          }
+        }
+      );
+    }
+  }
+  checkPassWord(event, password) {
+    let patternPassword = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/
+    if(patternPassword.test(event.target.value)) {
+      event.target.classList.remove("has-error");
+      event.target.classList.add("is-valid");
+    } else {
+      event.target.classList.remove("is-valid");
+      event.target.classList.add("has-error");
+    }
+  }
+  onFocus() {
+    this.isOnFocus = true;
   }
 }

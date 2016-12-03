@@ -3,13 +3,13 @@
   <div class="row">
     <div class="col-md-6">
       <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">Name</span>
+        <span class="input-group-addon" id="basic-addon1">Name *</span>
         <input type="text" class="form-control" [(ngModel)]="userData.name" name="name" placeholder="Name" aria-describedby="basic-addon1" required>
       </div>
     </div>
     <div class="col-md-6">
       <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">Lastname</span>
+        <span class="input-group-addon" id="basic-addon1">Lastname *</span>
         <input type="text" class="form-control" [(ngModel)]="userData.lastname" name="lastname" placeholder="Lastname" aria-describedby="basic-addon1" required>
       </div>
     </div>
@@ -17,35 +17,43 @@
   <div class="row">
     <div class="col-md-6">
       <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">Email</span>
+        <span class="input-group-addon" id="basic-addon1">Email *</span>
         <input type="text" class="form-control" [(ngModel)]="userData.email"
          pattern="^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|immo|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$"
-         name="email" placeholder="Email" aria-describedby="basic-addon1" required>
+         name="email" placeholder="Email" [ngClass]="{'has-error' : hasErrorClass, 'is-valid': isValidEntry}" aria-describedby="basic-addon1" 
+         (keyup)="checkDuplicateEntry($event, userData.email)"
+         (blur)="checkDuplicateEntry($event, userData.email)" required>
       </div>
     </div>
     <div class="col-md-6">
       <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">Mobile </span>
-        <input type="text" class="form-control" [(ngModel)]="userData.phone" name="phone" placeholder="Mobile" aria-describedby="basic-addon1" required>
+        <span class="input-group-addon" id="basic-addon1">Mobile (Optional)</span>
+        <input type="text" class="form-control" [(ngModel)]="userData.phone" name="phone" placeholder="Mobile" aria-describedby="basic-addon1">
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6">
       <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">Password </span>
-        <input type="password" class="form-control" [(ngModel)]="userData.passowrd" name="password" placeholder="Mobile" aria-describedby="basic-addon1" required>
+        <span class="input-group-addon" id="basic-addon1">Password *</span>
+        <input type="password" class="form-control" [(ngModel)]="userData.passowrd" 
+         (keyup)="checkPassWord($event)"
+         pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$"
+         name="password" placeholder="Password" aria-describedby="basic-addon1" required>
       </div>
     </div>
     <div class="col-md-6">
       <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">Confirm password </span>
-        <input type="password" class="form-control" [(ngModel)]="userData.confirm" name="confirm-password" placeholder="Mobile" aria-describedby="basic-addon1" required>
+        <span class="input-group-addon" id="basic-addon1">Confirm password *</span>
+        <input type="password" class="form-control" [(ngModel)]="userData.confirm" 
+        (focus)="onFocus()"
+        [ngClass]="{'has-error': isOnFocus && (userData.passowrd !== userData.confirm), 'is-valid': isOnFocus && userData.passowrd === userData.confirm}"
+        name="confirm-password" placeholder="Confirm Password" aria-describedby="basic-addon1" required>
       </div>
     </div>
   </div>
   <div class="text-center">
-    <button class="btn btn-primary" (click)="createUser(userData)" [disabled]="createForm.invalid">Create</button>
+    <button class="btn btn-primary" (click)="createUser(userData)" [disabled]="createForm.invalid || hasErrorClass || userData.passowrd !== userData.confirm">Create</button>
   </div>
 </form>
 

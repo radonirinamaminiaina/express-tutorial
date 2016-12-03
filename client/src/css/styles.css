@@ -10,7 +10,7 @@
   width: 100%;
 }
 .form-wrapper .input-group-addon {
-  width: 100px;
+  width: 149px;
   text-align: left;
 }
 .right {
@@ -39,4 +39,15 @@
   -webkit-transition: all ease 300ms;
   -ms-transition: all ease 300ms;
   transition: all ease 300ms;
+}
+.form-wrapper .has-error, .form-wrapper .ng-touched.ng-invalid {
+  border-color: #ff0000!important;
+}
+.form-wrapper .is-valid {
+  border-color:  #12ff02;
+}
+.panel-default .alert-warning {
+  margin-bottom: 0;
+  border-radius: 0;
+  text-align: center;
 }

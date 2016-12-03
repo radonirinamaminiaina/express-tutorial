@@ -20,10 +20,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(methodOverride());
 
 app.post(restConfig.prefix + "/user", user.addUser);
+app.post(restConfig.prefix + "/user/checkEmail", user.findEmail);
 app.get(restConfig.prefix + "/user", user.getUser);
 app.get(restConfig.prefix + "/user/:id", user.getUserById);
-app.post(restConfig.prefx + "/checkmail", user.findEmail);
 app.put(restConfig.prefix + "/user/:id", user.updateUser);
 app.delete(restConfig.prefix + "/user/:id", user.deleteUser);
 
-app.listen(3200);
+process.on("SIGTERM ", function() {
+
+});
+app.listen(process.env.port || 3200);
