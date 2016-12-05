@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
   userData: Object;
   constructor(private _http: HttpRequestService) { }
   ngOnInit() {
+    this.userData = JSON.parse(localStorage.getItem("user"));
   }
   onLogin(user: Object) {
     this._http.post(REST.login, user).subscribe(

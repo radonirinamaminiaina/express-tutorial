@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { HttpRequestService } from './http-request.service';
 declare var jQuery: any;
 var $ = jQuery;
@@ -10,15 +11,24 @@ var $ = jQuery;
 })
 export class AppComponent implements OnInit {
     userData: Object;
-    constructor(private http: HttpRequestService) { }
+    constructor(private http: HttpRequestService, private _router: Router) { }
     ngOnInit() {
         let getUser = JSON.parse(localStorage.getItem("user"));
         if(getUser) {
             this.userData = getUser.data;
         }
         $(document).on("user", (e, data) => {
-            console.log(data)
-            this.userData = data;
+            if(data.code == 404) {
+                this.userData = null;
+            } else {
+                this.userData = data;
+            }
         });
+    }
+    onLogout() {
+        localStorage.removeItem("user");
+        this.userData = null;
+        this._router.navigate(['/']);
+        return false;
     }
 }

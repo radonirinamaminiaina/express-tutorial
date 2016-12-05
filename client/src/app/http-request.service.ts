@@ -29,15 +29,15 @@ export class HttpRequestService {
     return doRequest;
   }
   put(url: string, params: Object): Observable<Request> {
-    let doRequest = this._http.put(CONFIG.baseUrl() + url, params, this.setHeader(false)).map(this.parseData).catch(this.handleError);
+    let doRequest = this._http.put(CONFIG.baseUrl() + url, params, this.setHeader(true)).map(this.parseData).catch(this.handleError);
     return doRequest;
   }
   post(url: string, params: Object): Observable<Request> {
-    let doRequest = this._http.post(CONFIG.baseUrl() + url, params, this.setHeader(false)).map(this.parseData).catch(this.handleError);
+    let doRequest = this._http.post(CONFIG.baseUrl() + url, params, this.setHeader(true)).map(this.parseData).catch(this.handleError);
     return doRequest;
   }
   delete(url: string): Observable<Request> {
-    let doRequest = this._http.delete(CONFIG.baseUrl() + url, this.setHeader(false)).map(this.parseData).catch(this.handleError);
+    let doRequest = this._http.delete(CONFIG.baseUrl() + url, this.setHeader(true)).map(this.parseData).catch(this.handleError);
     return doRequest;
   }
   /**

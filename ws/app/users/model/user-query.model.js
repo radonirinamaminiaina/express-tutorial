@@ -13,77 +13,94 @@ var encryptePassword = function(password, salt, callback) {
 }
 module.exports.getUser = function(req, res, next) {
     var reqCookie = req.headers["x-token"];
-    var resCookie = req.cookies;
-    console.log(reqCookie, resCookie)
-    userModel.find({}, function(err, data) {
-        if(err)
-            throw err;
-        var dataResponse = {
-            code: 200,
-            status: "ok",
-            data: data
-        }
-        res.json(dataResponse);
-        
-    });
+    if(reqCookie) {
+        userModel.find({}, function(err, data) {
+            if(err)
+                throw err;
+            var dataResponse = {
+                code: 200,
+                status: "ok",
+                data: data
+            }
+            res.json(dataResponse);
+            
+        });   
+    } else {
+        res.status(401).end();
+    }
 }
 module.exports.getUserById = function(req, res, next) {
-    userModel.findById(req.params.id, function(err, data) {
-        if (err) {
-            res.render('error');
-            //res.status(404);
-            return;
-        }
-        var dataResponse = {
-            code: 200,
-            status: "ok",
-            data: data
-        };
-        res.json(dataResponse);
-        
-    });
-}
-module.exports.findEmail = function(req, res, next) {
-    userModel.findOne({email: req.body.email}, 'email', function(err, doc) {
-        var validDoc;
-        if(err) {
-            res.send(err);
-            return;
-        }
-        if( ! doc) {
-            validDoc = {
-                status: "ok",
-                code: 200,
-                message: "Valid entry"
-            };
-        } else {
-            validDoc = {
-                status: "ok",
-                code: 409,
-                message: "Duplicate entry"
-            };
-        }
-        res.json(validDoc);
-    })
-}
-module.exports.addUser = function(req, res) {
-    encryptePassword(req.body.passowrd, req.body.email, function(hash) {
-        req.body.passowrd = hash;
-        console.log(hash)
-        var dataUser = new userModel(req.body);
-        dataUser.save(function(err) {
+    var reqCookie = req.headers["x-token"];
+    if(reqCookie) {
+        userModel.findById(req.params.id, function(err, data) {
             if (err) {
-                res.send(err);
+                res.render('error');
+                //res.status(404);
                 return;
-            };
-            res.json({
-                status: "ok",
+            }
+            var dataResponse = {
                 code: 200,
-                message: "User added"
-            });
+                status: "ok",
+                data: data
+            };
+            res.json(dataResponse);
             
         });
-    });
+    } else {
+        res.status(401).end();
+    }
+}
+module.exports.findEmail = function(req, res, next) {
+    var reqCookie = req.headers["x-token"];
+    if(reqCookie) {
+        userModel.findOne({email: req.body.email}, 'email', function(err, doc) {
+            var validDoc;
+            if(err) {
+                res.send(err);
+                return;
+            }
+            if( ! doc) {
+                validDoc = {
+                    status: "ok",
+                    code: 200,
+                    message: "Valid entry"
+                };
+            } else {
+                validDoc = {
+                    status: "ok",
+                    code: 409,
+                    message: "Duplicate entry"
+                };
+            }
+            res.json(validDoc);
+        });
+    }  else {
+        res.status(401).end();
+    }
+}
+module.exports.addUser = function(req, res) {
+    var reqCookie = req.headers["x-token"];
+    if(reqCookie) {
+        encryptePassword(req.body.passowrd, req.body.email, function(hash) {
+            req.body.passowrd = hash;
+            //req.body.role = ["admin"];
+            var dataUser = new userModel(req.body);
+            dataUser.save(function(err) {
+                if (err) {
+                    res.send(err);
+                    return;
+                };
+                res.json({
+                    status: "ok",
+                    code: 200,
+                    message: "User added"
+                });
+                
+            });
+        });
+    } else {
+        res.status(401).end();
+    }
 }
 module.exports.userLogin = function(req, res) {
     encryptePassword(req.body.passowrd, req.body.email, function(hash) {
@@ -100,7 +117,7 @@ module.exports.userLogin = function(req, res) {
                 require('crypto').randomBytes(25, function(err, buffer) {
                     //var token = base64url(buffer.toString('hex'));
                     //res.cookie("x-token", token, { maxAge: 5000, httpOnly: true })
-                    var token = jwt.sign({mail: doc.email}, "secretpass", {expiresIn: 120});
+                    var token = jwt.sign({mail: doc.email}, "secretpass", {expiresIn: 3600});
                     doc = doc.toObject(doc);
                     doc.token = token;
                     res.json({
@@ -114,37 +131,47 @@ module.exports.userLogin = function(req, res) {
     });
 }
 module.exports.deleteUser = function(req, res) {
-    userModel.remove(
-        {_id: req.params.id}, 
-        function(err) {
-            if (err) {
-                res.send(err);
+    var reqCookie = req.headers["x-token"];
+    if(reqCookie) {
+        userModel.remove(
+            {_id: req.params.id}, 
+            function(err) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json({
+                    status: "ok",
+                    code: 200,
+                    message: "Data deleted successfully"
+                });
+                
             }
-            res.json({
-                status: "ok",
-                code: 200,
-                message: "Data deleted successfully"
-            });
-            
-        }
-    );
+        );
+    } else {
+        res.status(401).end();
+    }
 }
 module.exports.updateUser = function(req, res) {
-    userModel.findOneAndUpdate(
-        { _id: req.params.id },
-        { $set: req.body },
-        { new: true },
-        function(err, data) {
-            if (err) {
-                res.send(err);
-                return;
+    var reqCookie = req.headers["x-token"];
+    if(reqCookie) {
+        userModel.findOneAndUpdate(
+            { _id: req.params.id },
+            { $set: req.body },
+            { new: true },
+            function(err, data) {
+                if (err) {
+                    res.send(err);
+                    return;
+                }
+                res.json({
+                    status: "ok",
+                    code: 200,
+                    message: "Data saved successfully"
+                });
+                
             }
-            res.json({
-                status: "ok",
-                code: 200,
-                message: "Data saved successfully"
-            });
-            
-        }
-    );
+        );
+    } else {
+        res.status(401).end();
+    } 
 }

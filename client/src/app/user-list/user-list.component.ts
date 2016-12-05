@@ -9,10 +9,12 @@ declare var $: any;
 })
 export class UserListComponent implements OnInit {
   userList: any;
+  userData: any;
   constructor( private _http: HttpRequestService ) { }
 
   ngOnInit() {
     this.fetchUsers();
+    this.userData = JSON.parse(localStorage.getItem("user"));
   }
 
   fetchUsers() {
@@ -24,7 +26,6 @@ export class UserListComponent implements OnInit {
   }
 
   deleteThis(id: String) {
-    console.log(id);
     this._http.delete(REST.user + id).subscribe(
       (response) => {
         this.fetchUsers();
