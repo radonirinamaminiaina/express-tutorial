@@ -15,17 +15,24 @@ export class EditUserComponent implements OnInit {
     email: null,
     phone: null
   };
+  hasEditRight: boolean = false;
   constructor(private _http: HttpRequestService, private _route: ActivatedRoute, private _router: Router) { }
 
   ngOnInit() {
+    let getUserConnected = JSON.parse(localStorage.getItem("user"));
     this._route.params.forEach(
       (params) => {
-        this._http.get(REST.user + params["id"]).subscribe(
-          (response) => {
-            this.userData = response.data;
-            console.log(this.userData)
-          }
-        );
+        let id = params["id"];
+        if(getUserConnected.data._id == id || getUserConnected.data.role.indexOf('admin') !== -1) {
+          this.hasEditRight = true;
+          this._http.get(REST.user + id).subscribe(
+            (response) => {
+              this.userData = response.data;
+            }
+          );
+        } else {
+          this.hasEditRight = false;
+        }
       }
     )
   }
