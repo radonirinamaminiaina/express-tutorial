@@ -2,6 +2,7 @@ var userModel = require("./user-collection.model");
 var _ = require("lodash");
 var crypto = require("crypto");
 var jwt = require("jsonwebtoken");
+var config = require("../../../config/config");
 var encryptePassword = function(password, salt, callback) {
     console.log(salt)
     crypto.pbkdf2(password, salt, 100000, 512, 'sha512', function(err, key) {
@@ -117,7 +118,7 @@ module.exports.userLogin = function(req, res) {
                 require('crypto').randomBytes(25, function(err, buffer) {
                     //var token = base64url(buffer.toString('hex'));
                     //res.cookie("x-token", token, { maxAge: 5000, httpOnly: true })
-                    var token = jwt.sign({mail: doc.email}, "secretpass", {expiresIn: 3600});
+                    var token = jwt.sign({mail: doc.email}, "secretpass", {expiresIn: config.tokenExpiredTime});
                     doc = doc.toObject(doc);
                     doc.token = token;
                     res.json({

@@ -1,3 +1,6 @@
+body {
+  background: #f5f5f5;
+}
 .main-container {
   margin-top: 70px;
 }
@@ -59,4 +62,25 @@
 }
 .panel table>tbody>tr>td, .panel table>tbody>tr>th{
   vertical-align: middle;
+}
+.desc {
+  background: #fff;
+  margin-bottom: 20px;
+}
+.desc .desc-head {
+  border-bottom: solid 1px #f5f5f5;
+}
+.desc > div {
+  padding: 10px;
+}
+.desc h2 {
+  margin-top: 0;
+}
+.btn-heading {
+  background: #fff;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+.btn-heading .btn {
+  margin-left: 15px;
 }

@@ -1,3 +1,24 @@
-<p>
-  profile works!
-</p>
+<div class="clearfix btn-heading" *ngIf="(userConnected?.data._id == userData?._id) || (userConnected?.data.role ? userConnected?.data.role[0] == 'admin' : false)">
+  <a href="" class="btn btn-danger pull-right" *ngIf="(userConnected?.data.role ? userConnected?.data.role[0] == 'admin' : false)">Remove this user</a> 
+  <a [routerLink]="['../../edit/' + userConnected?.data._id]" class="btn btn-warning pull-right" *ngIf="(userConnected?.data._id == userData?._id) || (userConnected?.data.role ? userConnected?.data.role[0] == 'admin' : false)">Edit</a>
+</div>
+<div class="desc">
+  <div class="desc-head">
+    <h2>About</h2>
+  </div>
+  <div class="desc-body">
+    <p>Name: {{userData?.name}}</p>
+    <p>Lastname: {{userData?.name}}</p>
+    <p>Email: {{userData?.email}}</p>
+    <p>Phone: {{userData?.phone}}</p>
+  </div>
+</div>
+<div  class="desc">
+  <div class="desc-head">
+    <h2>Description</h2>
+  </div>
+  <div class="desc-body">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos facere vel expedita numquam ipsa praesentium hic voluptatibus necessitatibus quae, impedit tenetur consectetur odit, modi esse, quis voluptates! Quisquam, eligendi, consequatur.</p>
+  </div>
+</div>
+
