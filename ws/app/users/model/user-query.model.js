@@ -3,6 +3,15 @@ var _ = require("lodash");
 var crypto = require("crypto");
 var jwt = require("jsonwebtoken");
 var config = require("../../../config/config");
+/**
+ * encryptePassword
+ * 
+ * create a salt to encrypte the password
+ * 
+ * @param password {String} 
+ * @param salt {String} it the encrypte algorithm
+ * @param callback {Function}
+ */
 var encryptePassword = function(password, salt, callback) {
     crypto.pbkdf2(password, salt, 100000, 512, 'sha512', function(err, key) {
         if(err)
@@ -11,10 +20,42 @@ var encryptePassword = function(password, salt, callback) {
         callback(hash)
     });
 }
-var User = function() {}
-User.prototype.findAll = function(req, res, next) {
+/**
+ * detectRequestToken
+ * 
+ * Detect if x-token is present in the header request
+ * 
+ * @param req {Object} request header
+ * @param res {Object} response header
+ */
+var detectRequestToken = function(req, res) {
     var reqCookie = req.headers["x-token"];
-    if(reqCookie) {
+    if(!reqCookie) {
+        res.status(401).end();
+        return false;
+    } else {
+        return true;
+    }
+}
+/**
+ * User
+ * 
+ * user class to manage user action <get, post, put, delete>
+ * @class
+ * 
+ */
+var User = function() {}
+/**
+ * findAll
+ * 
+ * Find all user
+ * 
+ * @param req {Object} request headers
+ * @param res {Object} response headers
+ * @param res {Function} pass to next middleware
+ */
+User.prototype.findAll = function(req, res, next) {
+    if(detectRequestToken(req, res)) {
         userModel.find({}, function(err, data) {
             if(err)
                 throw err;
@@ -25,18 +66,23 @@ User.prototype.findAll = function(req, res, next) {
             }
             res.json(dataResponse);
             
-        });   
-    } else {
-        res.status(401).end();
-    }
+        });
+    }   
 };
+/**
+ * findById
+ * 
+ * Find user by id
+ * 
+ * @param req {Object} request headers
+ * @param res {Object} response headers
+ * @param res {Function} pass to next middleware
+ */
 User.prototype.findById = function(req, res, next) {
-    var reqCookie = req.headers["x-token"];
-    if(reqCookie) {
+    if(detectRequestToken(req, res)) {
         userModel.findById(req.params.id, function(err, data) {
             if (err) {
-                res.render('error');
-                //res.status(404);
+                res.send(err);
                 return;
             }
             var dataResponse = {
@@ -47,13 +93,19 @@ User.prototype.findById = function(req, res, next) {
             res.json(dataResponse);
             
         });
-    } else {
-        res.status(401).end();
     }
 }
+/**
+ * findByEmail
+ * 
+ * Find user by email
+ * 
+ * @param req {Object} request headers
+ * @param res {Object} response headers
+ * @param res {Function} pass to next middleware
+ */
 User.prototype.findByEmail = function(req, res, next) {
-    var reqCookie = req.headers["x-token"];
-    if(reqCookie) {
+    if(detectRequestToken(req, res)) {
         userModel.findOne({email: req.body.email}, 'email', function(err, doc) {
             var validDoc;
             if(err) {
@@ -75,13 +127,19 @@ User.prototype.findByEmail = function(req, res, next) {
             }
             res.json(validDoc);
         });
-    }  else {
-        res.status(401).end();
     }
 }
+/**
+ * create
+ * 
+ * create new user
+ * 
+ * @param req {Object} request headers
+ * @param res {Object} response headers
+ * @param res {Function} pass to next middleware
+ */
 User.prototype.create = function(req, res) {
-    var reqCookie = req.headers["x-token"];
-    if(reqCookie) {
+    if(detectRequestToken(req, res)) {
         encryptePassword(req.body.passowrd, req.body.email, function(hash) {
             req.body.passowrd = hash;
             //req.body.role = ["admin"];
@@ -99,10 +157,17 @@ User.prototype.create = function(req, res) {
                 
             });
         });
-    } else {
-        res.status(401).end();
     }
 }
+/**
+ * login
+ * 
+ * user login
+ * 
+ * @param req {Object} request headers
+ * @param res {Object} response headers
+ * @param res {Function} pass to next middleware
+ */
 User.prototype.login = function(req, res) {
     encryptePassword(req.body.passowrd, req.body.email, function(hash) {
         userModel.findOne({ email: req.body.email, passowrd: hash } , {passowrd: 0}, function(err, doc) {
@@ -129,9 +194,17 @@ User.prototype.login = function(req, res) {
         })
     });
 }
+/**
+ * update
+ * 
+ * update user
+ * 
+ * @param req {Object} request headers
+ * @param res {Object} response headers
+ * @param res {Function} pass to next middleware
+ */
 User.prototype.update = function(req, res) {
-    var reqCookie = req.headers["x-token"];
-    if(reqCookie) {
+    if(detectRequestToken(req, res)) {
         userModel.findOneAndUpdate(
             { _id: req.params.id },
             { $set: req.body },
@@ -149,13 +222,19 @@ User.prototype.update = function(req, res) {
                 
             }
         );
-    } else {
-        res.status(401).end();
     } 
 }
+/**
+ * delete
+ * 
+ * delete user
+ * 
+ * @param req {Object} request headers
+ * @param res {Object} response headers
+ * @param res {Function} pass to next middleware
+ */
 User.prototype.delete = function(req, res) {
-    var reqCookie = req.headers["x-token"];
-    if(reqCookie) {
+    if(detectRequestToken(req, res)) {
         userModel.remove(
             {_id: req.params.id}, 
             function(err) {
@@ -170,8 +249,6 @@ User.prototype.delete = function(req, res) {
                 
             }
         );
-    } else {
-        res.status(401).end();
     }
 }
 

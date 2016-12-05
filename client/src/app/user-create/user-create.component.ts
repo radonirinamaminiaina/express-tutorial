@@ -33,10 +33,10 @@ export class UserCreateComponent implements OnInit {
     delete user["confirm"];
     this._http.post(REST.user, user).subscribe(
       (response) => {
+        this._router.navigate(['/user']);
         this.userData = null;
         this.message = response.message;
         $(".user-created").addClass("show-alert");
-        this._router.navigate(['/user']);
         setTimeout(
           () => {
             $(".user-created").removeClass("show-alert");

@@ -64,10 +64,10 @@ export class HttpRequestService {
     handleError(error: any) {
         let errMsg = (error.message) ? error.message :
         error.status ? `${error.url}: ${error.status} - ${error.statusText}` : 'Server error';
-        if(error.status === 401) {
+        /*if(error.status === 401) {
           location.href = "/";
           localStorage.removeItem("user");
-        }
+        }*/
         return Observable.throw(errMsg);
     }
 

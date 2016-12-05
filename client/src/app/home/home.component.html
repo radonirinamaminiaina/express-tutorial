@@ -16,7 +16,9 @@
           <p class="text-danger" *ngIf="userNotFound?.code >= 400">{{userNotFound?.message}}</p>
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">@</span>
-            <input type="text" class="form-control" [(ngModel)]="userLogin.email" name="email" placeholder="email" aria-describedby="basic-addon1" required>
+            <input type="text" class="form-control" [(ngModel)]="userLogin.email" 
+            pattern="^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|immo|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$"
+            name="email" placeholder="email" aria-describedby="basic-addon1" required>
           </div>
         </fieldset>
         <fieldset>

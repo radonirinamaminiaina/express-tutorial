@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
     this.userData = JSON.parse(localStorage.getItem("user"));
   }
   onLogin(user: Object) {
+    user = $.extend({}, {login: true}, user);
     this._http.post(REST.login, user).subscribe(
       (response) => {
         if(response.code >= 400) {

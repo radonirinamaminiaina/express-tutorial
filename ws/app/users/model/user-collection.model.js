@@ -31,6 +31,11 @@ var userModel = new Schema({
         status: Boolean,
         count: Number
     }
+} , {
+    timestamps: { 
+        createdAt: 'created_at',
+        updatedAt: 'updated_at'
+    }
 });
 
 module.exports = mongoose.model('user', userModel);
