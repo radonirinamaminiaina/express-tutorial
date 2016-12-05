@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col-md-12" *ngIf="userData">
+    <div class="panel panel-default">
+      <div class="panel-heading">Manage your user</div>
+      <div class="panel-body">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt harum deleniti soluta beatae modi velit sapiente, magni dolore ab eos molestias vel nemo excepturi, similique architecto ipsam inventore cum blanditiis.</p>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default login-panel" *ngIf="!userData">
+    <!-- Default panel contents -->
+    <div class="panel-heading">Login first</div>
+    <div class="panel-body">
+      <form action="" class="form-wrapper" #loginForm="ngForm" novalidate>
+        <fieldset>
+          <p class="text-danger" *ngIf="userNotFound?.code >= 400">{{userNotFound?.message}}</p>
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">@</span>
+            <input type="text" class="form-control" [(ngModel)]="userLogin.email" 
+            pattern="^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|immo|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$"
+            name="email" placeholder="email" aria-describedby="basic-addon1" required>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">?</span>
+            <input type="password" class="form-control" [(ngModel)]="userLogin.passowrd" name="password" placeholder="password" aria-describedby="basic-addon2" required>
+          </div>
+        </fieldset>
+        <div class="text-center">
+          <button class="btn btn-primary" [disabled]="loginForm.invalid" (click)="onLogin(userLogin)">Login</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

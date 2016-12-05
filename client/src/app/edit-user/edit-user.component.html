@@ -1,0 +1,25 @@
+<form action="" class="form-wrapper" #editForm="ngForm" *ngIf="hasEditRight">
+  <h2>Edit User</h2>
+  <div class="input-group">
+    <span class="input-group-addon" id="basic-addon1">Name</span>
+    <input type="text" class="form-control" name="name" [(ngModel)]="userData.name" placeholder="Name" aria-describedby="basic-addon1" required>
+  </div>
+  <div class="input-group">
+    <span class="input-group-addon" id="basic-addon1">Lastname</span>
+    <input type="text" class="form-control" name="lastname" [(ngModel)]="userData.lastname" placeholder="Lastname" aria-describedby="basic-addon1" required>
+  </div>
+  <div class="input-group">
+    <span class="input-group-addon" id="basic-addon1">Email</span>
+    <input type="text" class="form-control" name="email" [(ngModel)]="userData.email" placeholder="Email" aria-describedby="basic-addon1" readonly required>
+  </div>
+  <div class="input-group">
+    <span class="input-group-addon" id="basic-addon1">Mobile </span>
+    <input type="text" class="form-control" name="phone" [(ngModel)]="userData.phone" placeholder="Mobile" aria-describedby="basic-addon1" required>
+  </div>
+  <div class="right">
+    <button (click)="update(userData)" class="btn btn-primary" [disabled]="editForm.invalid">Update</button>
+  </div>
+</form>
+<div class="alert alert-danger" *ngIf=" ! hasEditRight">
+  You are not authorized to edit this user. Please login as administrator or to with the profile you want to edit!
+</div>

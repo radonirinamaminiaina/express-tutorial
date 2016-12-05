@@ -1,0 +1,42 @@
+<div class="panel panel-default" *ngIf="userData">
+  <!-- Default panel contents -->
+  <div class="panel-heading clearfix">Lists Of users <a [routerLink]="['create']" class="btn btn-primary right" *ngIf="userData?.data.role ? userData?.data.role == 'admin' : false">Add User</a></div>
+
+  <!-- Table -->
+  <table class="table">
+    <tr>
+    <th>Name</th>
+    <th>Lastname</th>
+    <th>Email</th>
+    <th>Phone</th>
+    <th>Created at</th>
+    <th>Action</th>
+  </tr>
+  <tr *ngFor="let user of userList" [class.admin]="user.role == 'admin'">
+    <td>{{user.name}}</td>
+    <td>{{user.lastname}}</td>
+    <td>{{user.email}}</td>
+    <td>{{user.phone}}</td>
+    <td [class.text-center]="!user.created_at || user.created_at == ''">{{user.created_at ? (user.created_at | date: "yyyy-MM-dd 'at' hh:mm:ss") : "-"}}</td>
+    <td>
+      <div class="row">
+        <div class="col-md-3">
+          <a [routerLink]="['edit/' + user._id]" class="btn btn-warning" *ngIf="(userData?.data.role ? (userData?.data.role[0] == 'admin') : false) || userData?.data._id == user._id">Edit</a>
+        </div>
+        <div class="col-md-3">
+          <a [routerLink]="[(user.name | lowercase) + '.' + (user.lastname | lowercase) + '/' + user._id]" title="" class="btn btn-success">View</a>
+        </div>
+        <div class="col-md-3">
+          <a (click)="deleteThis(user._id)" class="btn btn-danger" *ngIf="(userData?.data.role ? (userData?.data.role[0] == 'admin') : false) && user.role[0] != 'admin'">Remove</a>
+        </div>
+      </div>
+    </td>
+  </tr>
+  </table>
+  <div class="alert alert-warning" *ngIf="!userList?.length">
+    No user found
+  </div>
+</div>
+<div class="alert alert-danger user-alert-danger clearfix"  *ngIf="!userData">
+  You can't view this page until you are connected. Please, login first! <a [routerLink]="['/']" class="btn btn-info pull-right">Login</a>
+</div>
