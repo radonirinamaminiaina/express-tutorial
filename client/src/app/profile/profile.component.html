@@ -7,10 +7,30 @@
     <h2>About</h2>
   </div>
   <div class="desc-body">
-    <p><span *ngIf="!editThis?.name">Name: {{userData?.name}}</span> <input type="text" [ngModel]="userData.name" id="name" *ngIf="editThis?.name" /> <a href="" title="" (click)="edit('name')">edit</a></p>
-    <p><span *ngIf="!editThis?.lastname">Lastname: {{userData?.lastname}}</span> <input type="text" [ngModel]="userData.lastname" id="lastname" *ngIf="editThis?.lastname" />  <a href="" title="" (click)="edit('lastname')">edit</a></p>
-    <p><span *ngIf="!editThis?.email">Email: {{userData?.email}}</span> <input type="text" [ngModel]="userData.email" id="email" *ngIf="editThis?.email" />  <a href="" title="" (click)="edit('email')">edit</a></p>
-    <p><span *ngIf="!editThis?.phone">Phone: {{userData?.phone}}</span> <input type="text" [ngModel]="userData.phone" id="phone" *ngIf="editThis?.phone" />  <a href="" title="" (click)="edit('phone')">edit</a></p>
+    <p>
+      <span *ngIf="!editThis?.name">Name: {{userData?.name}}</span> 
+      <input type="text" [ngModel]="userData.name" id="name" *ngIf="editThis?.name" /> 
+      <a href="" title="" (click)="edit('name')">edit</a>
+      <a href="" title="" *ngIf="editThis?.name">save</a>
+    </p>
+    <p>
+      <span *ngIf="!editThis?.lastname">Lastname: {{userData?.lastname}}</span> 
+      <input type="text" [ngModel]="userData.lastname" id="lastname" *ngIf="editThis?.lastname" />  
+      <a href="" title="" (click)="edit('lastname')">edit</a>
+      <a href="" title="" *ngIf="editThis?.lastname">save</a>
+    </p>
+    <p>
+      <span *ngIf="!editThis?.email">Email: {{userData?.email}}</span> 
+      <input type="text" [ngModel]="userData.email" id="email" *ngIf="editThis?.email" />  
+      <a href="" title="" (click)="edit('email')">edit</a>
+      <a href="" title="" *ngIf="editThis?.email">save</a>
+    </p>
+    <p>
+      <span *ngIf="!editThis?.phone">Phone: {{userData?.phone}}</span> 
+      <input type="text" [ngModel]="userData.phone" id="phone" *ngIf="editThis?.phone" />  
+      <a href="" title="" (click)="edit('phone')">edit</a>
+      <a href="" title="" *ngIf="editThis?.phone">save</a>
+    </p>
   </div>
 </div>
 <div  class="desc">
