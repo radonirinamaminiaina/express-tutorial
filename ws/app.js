@@ -5,10 +5,11 @@ var mongoose = require("mongoose");
 var UserController = require("./app/users/controller/user.controller");
 var methodOverride  = require("method-override");
 var bodyParser = require("body-parser");
+var config = require("./config/config");
 var user = new UserController();
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/e-commerce');
+mongoose.connect(config.database.connect());
 
 app.use(cookieParser());
 app.disable('etag');
