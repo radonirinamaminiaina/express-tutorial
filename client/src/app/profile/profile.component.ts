@@ -26,13 +26,16 @@ export class ProfileComponent implements OnInit {
     this._route.params.forEach(
       (params) => {
         let id = params["id"];
-        this._http.get(REST.user + id).subscribe(
-            (response) => {
-              this.userData = response.data;
-            }
-        );
+        this.fetchUser(id);
       }
     )
+  }
+  fetchUser(id: String) {
+    this._http.get(REST.user + id).subscribe(
+        (response) => {
+          this.userData = response.data;
+        }
+    );
   }
   edit(field) {
     this.editThis = {};
@@ -59,6 +62,20 @@ export class ProfileComponent implements OnInit {
   }
   cancel() {
     this.editThis = null;
+    return false;
+  }
+  deleteThis(id: String) {
+    this._http.delete(REST.user + id).subscribe(
+      (response) => {
+        $(".user-removed").addClass("show-alert");
+        this._router.navigate(['/user']);
+        setTimeout(
+          () => {
+            $(".user-removed").removeClass("show-alert");
+          }, 3000
+        );
+      }
+    );
     return false;
   }
 }

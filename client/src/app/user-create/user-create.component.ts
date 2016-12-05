@@ -23,9 +23,11 @@ export class UserCreateComponent implements OnInit {
   hasErrorClass: boolean;
   isValidEntry: boolean;
   isOnFocus: boolean;
+  userConnected: boolean;
   constructor(private _http: HttpRequestService, private _router: Router) { }
 
   ngOnInit() {
+    this.userConnected = JSON.parse(localStorage.getItem("user"));
   }
   createUser(user: Object) {
     delete user["confirm"];

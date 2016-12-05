@@ -84,3 +84,7 @@ body {
 .btn-heading .btn {
   margin-left: 15px;
 }
+.login-panel {
+  width: 600px;
+  margin: 0 auto;
+}
