@@ -10,8 +10,14 @@ declare var $: any;
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  userData: Object;
+  userData: Object = {
+    name: null,
+    lastname: null,
+    email: null,
+    phone: null
+  };
   userConnected: boolean;
+  editThis: Object;
   constructor(private _http: HttpRequestService, private _route: ActivatedRoute, private _router: Router) { }
 
   ngOnInit() {
@@ -27,6 +33,11 @@ export class ProfileComponent implements OnInit {
         );
       }
     )
+  }
+  edit(field) {
+    this.editThis = {};
+    this.editThis[field] = true;
+    return false;
   }
 
 }

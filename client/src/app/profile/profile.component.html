@@ -7,10 +7,10 @@
     <h2>About</h2>
   </div>
   <div class="desc-body">
-    <p>Name: {{userData?.name}}</p>
-    <p>Lastname: {{userData?.name}}</p>
-    <p>Email: {{userData?.email}}</p>
-    <p>Phone: {{userData?.phone}}</p>
+    <p><span *ngIf="!editThis?.name">Name: {{userData?.name}}</span> <input type="text" [ngModel]="userData.name" id="name" *ngIf="editThis?.name" /> <a href="" title="" (click)="edit('name')">edit</a></p>
+    <p><span *ngIf="!editThis?.lastname">Lastname: {{userData?.lastname}}</span> <input type="text" [ngModel]="userData.lastname" id="lastname" *ngIf="editThis?.lastname" />  <a href="" title="" (click)="edit('lastname')">edit</a></p>
+    <p><span *ngIf="!editThis?.email">Email: {{userData?.email}}</span> <input type="text" [ngModel]="userData.email" id="email" *ngIf="editThis?.email" />  <a href="" title="" (click)="edit('email')">edit</a></p>
+    <p><span *ngIf="!editThis?.phone">Phone: {{userData?.phone}}</span> <input type="text" [ngModel]="userData.phone" id="phone" *ngIf="editThis?.phone" />  <a href="" title="" (click)="edit('phone')">edit</a></p>
   </div>
 </div>
 <div  class="desc">
