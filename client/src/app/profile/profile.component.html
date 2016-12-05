@@ -8,25 +8,28 @@
   </div>
   <div class="desc-body">
     <p>
-      <span *ngIf="!editThis?.name">Name: {{userData?.name}}</span> 
+      Name:<span *ngIf="!editThis?.name"> {{userData?.name}}</span> 
       <input type="text" [ngModel]="userData.name" id="name" *ngIf="editThis?.name" /> 
-      <a href="" title="" (click)="edit('name')" *ngIf="(userConnected?.data._id == userData?._id) || (userConnected?.data.role ? userConnected?.data.role[0] == 'admin' : false)">edit</a>
+      <a href="" title="" (click)="edit('name')" *ngIf="((userConnected?.data._id == userData?._id) || (userConnected?.data.role ? userConnected?.data.role[0] == 'admin' : false)) && !editThis?.name">edit</a>
       <a href="" title="" (click)="save('name')" *ngIf="editThis?.name">save</a>
+      <a href="" title="" (click)="cancel()" *ngIf="editThis?.name">cancel</a>
     </p>
     <p>
-      <span *ngIf="!editThis?.lastname">Lastname: {{userData?.lastname}}</span> 
+      Lastname:<span *ngIf="!editThis?.lastname"> {{userData?.lastname}}</span> 
       <input type="text" [ngModel]="userData.lastname" id="lastname" *ngIf="editThis?.lastname"/>  
-      <a href="" title="" (click)="edit('lastname')" *ngIf="(userConnected?.data._id == userData?._id) || (userConnected?.data.role ? userConnected?.data.role[0] == 'admin' : false)">edit</a>
+      <a href="" title="" (click)="edit('lastname')" *ngIf="((userConnected?.data._id == userData?._id) || (userConnected?.data.role ? userConnected?.data.role[0] == 'admin' : false))  && !editThis?.lastname">edit</a>
       <a href="" title="" (click)="save('lastname')" *ngIf="editThis?.lastname">save</a>
+      <a href="" title="" (click)="cancel()" *ngIf="editThis?.lastname">cancel</a>
     </p>
     <p>
       <span>Email: {{userData?.email}}</span> 
     </p>
     <p>
-      <span *ngIf="!editThis?.phone">Phone: {{userData?.phone}}</span> 
+      Phone:<span *ngIf="!editThis?.phone"> {{userData?.phone}}</span> 
       <input type="text" [ngModel]="userData.phone" id="phone" *ngIf="editThis?.phone"/>  
-      <a href="" title="" (click)="edit('phone')" *ngIf="(userConnected?.data._id == userData?._id) || (userConnected?.data.role ? userConnected?.data.role[0] == 'admin' : false)">edit</a>
+      <a href="" title="" (click)="edit('phone')" *ngIf="((userConnected?.data._id == userData?._id) || (userConnected?.data.role ? userConnected?.data.role[0] == 'admin' : false))  && !editThis?.phone">edit</a>
       <a href="" title="" (click)="save('phone')" *ngIf="editThis?.phone">save</a>
+      <a href="" title="" (click)="cancel()" *ngIf="editThis?.phone">cancel</a>
     </p>
   </div>
 </div>

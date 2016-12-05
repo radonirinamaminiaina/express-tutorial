@@ -57,4 +57,8 @@ export class ProfileComponent implements OnInit {
     );
     return false;
   }
+  cancel() {
+    this.editThis = null;
+    return false;
+  }
 }
