@@ -39,5 +39,22 @@ export class ProfileComponent implements OnInit {
     this.editThis[field] = true;
     return false;
   }
-
+  save(field) {
+    let params = {};
+    let value = $("#" + field).val();
+    params[field] = value;
+    this._http.put(REST.user + this.userData["_id"], params).subscribe(
+      (response) => {
+        this.editThis[field] = false;;
+        $(".user-updated").addClass("show-alert");
+        this.userData[field] = value;
+        setTimeout(
+          () => {
+            $(".user-updated").removeClass("show-alert");
+          }, 3000
+        );
+      }
+    );
+    return false;
+  }
 }
