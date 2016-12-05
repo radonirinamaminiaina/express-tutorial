@@ -57,6 +57,6 @@
   </div>
 </form>
 
-<div class="alert alert-danger">
+<div class="alert alert-danger" *ngIf="userConnected?.data.role.length ? userConnected.data.role[0] != 'admin' : true">
   You can't create new user until you are not administrator. Please log as administrator!
 </div>

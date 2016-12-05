@@ -13,6 +13,7 @@ export class HomeComponent implements OnInit {
     passowrd: null
   };
   userData: Object;
+  userNotFound: Object;
   constructor(private _http: HttpRequestService) { }
   ngOnInit() {
     this.userData = JSON.parse(localStorage.getItem("user"));
@@ -20,9 +21,13 @@ export class HomeComponent implements OnInit {
   onLogin(user: Object) {
     this._http.post(REST.login, user).subscribe(
       (response) => {
-        localStorage.setItem("user", JSON.stringify(response));
-        this.userData = JSON.parse(localStorage.getItem("user"));
-        $(document).trigger("user", [this.userData["data"]]);
+        if(response.code >= 400) {
+          this.userNotFound = response;
+        } else {
+          localStorage.setItem("user", JSON.stringify(response));
+          this.userData = JSON.parse(localStorage.getItem("user"));
+          $(document).trigger("user", [this.userData["data"]]);
+        }
       }
     );
   }

@@ -13,6 +13,7 @@
     <div class="panel-body">
       <form action="" class="form-wrapper" #loginForm="ngForm" novalidate>
         <fieldset>
+          <p class="text-danger" *ngIf="userNotFound?.code >= 400">{{userNotFound?.message}}</p>
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon1">@</span>
             <input type="text" class="form-control" [(ngModel)]="userLogin.email" name="email" placeholder="email" aria-describedby="basic-addon1" required>
@@ -25,7 +26,7 @@
           </div>
         </fieldset>
         <div class="text-center">
-          <button class="btn btn-primary pull-right" [disabled]="loginForm.invalid" (click)="onLogin(userLogin)">Login</button>
+          <button class="btn btn-primary" [disabled]="loginForm.invalid" (click)="onLogin(userLogin)">Login</button>
         </div>
       </form>
     </div>
