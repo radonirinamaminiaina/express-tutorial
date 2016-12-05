@@ -4,7 +4,6 @@ var crypto = require("crypto");
 var jwt = require("jsonwebtoken");
 var config = require("../../../config/config");
 var encryptePassword = function(password, salt, callback) {
-    console.log(salt)
     crypto.pbkdf2(password, salt, 100000, 512, 'sha512', function(err, key) {
         if(err)
             throw err;
@@ -12,7 +11,8 @@ var encryptePassword = function(password, salt, callback) {
         callback(hash)
     });
 }
-module.exports.getUser = function(req, res, next) {
+var User = function() {}
+User.prototype.findAll = function(req, res, next) {
     var reqCookie = req.headers["x-token"];
     if(reqCookie) {
         userModel.find({}, function(err, data) {
@@ -29,8 +29,8 @@ module.exports.getUser = function(req, res, next) {
     } else {
         res.status(401).end();
     }
-}
-module.exports.getUserById = function(req, res, next) {
+};
+User.prototype.findById = function(req, res, next) {
     var reqCookie = req.headers["x-token"];
     if(reqCookie) {
         userModel.findById(req.params.id, function(err, data) {
@@ -51,7 +51,7 @@ module.exports.getUserById = function(req, res, next) {
         res.status(401).end();
     }
 }
-module.exports.findEmail = function(req, res, next) {
+User.prototype.findByEmail = function(req, res, next) {
     var reqCookie = req.headers["x-token"];
     if(reqCookie) {
         userModel.findOne({email: req.body.email}, 'email', function(err, doc) {
@@ -79,7 +79,7 @@ module.exports.findEmail = function(req, res, next) {
         res.status(401).end();
     }
 }
-module.exports.addUser = function(req, res) {
+User.prototype.create = function(req, res) {
     var reqCookie = req.headers["x-token"];
     if(reqCookie) {
         encryptePassword(req.body.passowrd, req.body.email, function(hash) {
@@ -103,7 +103,7 @@ module.exports.addUser = function(req, res) {
         res.status(401).end();
     }
 }
-module.exports.userLogin = function(req, res) {
+User.prototype.login = function(req, res) {
     encryptePassword(req.body.passowrd, req.body.email, function(hash) {
         userModel.findOne({ email: req.body.email, passowrd: hash } , {passowrd: 0}, function(err, doc) {
             if(err)
@@ -116,8 +116,6 @@ module.exports.userLogin = function(req, res) {
                 });
             } else {
                 require('crypto').randomBytes(25, function(err, buffer) {
-                    //var token = base64url(buffer.toString('hex'));
-                    //res.cookie("x-token", token, { maxAge: 5000, httpOnly: true })
                     var token = jwt.sign({mail: doc.email}, "secretpass", {expiresIn: config.tokenExpiredTime});
                     doc = doc.toObject(doc);
                     doc.token = token;
@@ -131,28 +129,7 @@ module.exports.userLogin = function(req, res) {
         })
     });
 }
-module.exports.deleteUser = function(req, res) {
-    var reqCookie = req.headers["x-token"];
-    if(reqCookie) {
-        userModel.remove(
-            {_id: req.params.id}, 
-            function(err) {
-                if (err) {
-                    res.send(err);
-                }
-                res.json({
-                    status: "ok",
-                    code: 200,
-                    message: "Data deleted successfully"
-                });
-                
-            }
-        );
-    } else {
-        res.status(401).end();
-    }
-}
-module.exports.updateUser = function(req, res) {
+User.prototype.update = function(req, res) {
     var reqCookie = req.headers["x-token"];
     if(reqCookie) {
         userModel.findOneAndUpdate(
@@ -176,3 +153,26 @@ module.exports.updateUser = function(req, res) {
         res.status(401).end();
     } 
 }
+User.prototype.delete = function(req, res) {
+    var reqCookie = req.headers["x-token"];
+    if(reqCookie) {
+        userModel.remove(
+            {_id: req.params.id}, 
+            function(err) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json({
+                    status: "ok",
+                    code: 200,
+                    message: "Data deleted successfully"
+                });
+                
+            }
+        );
+    } else {
+        res.status(401).end();
+    }
+}
+
+module.exports = new User();
