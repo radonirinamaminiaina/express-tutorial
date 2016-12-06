@@ -39,7 +39,7 @@ d447fba346381990c226cfe0e2784133d6b20e316503c204e17a92bb96e81d5104575af56f9f000e
     role: ['admin']
 })
 ```
-*Note* : Copy and paste the document above to create admin account. The password salt is generated according to the giving email and use pbkdf2 crypting.
+*Note* : Copy and paste the document above to create admin account. The password hash and salt is generated according to the giving email and use pbkdf2 crypting.
 <br/>
 <br/>
 **Create Database and collection automatically**
