@@ -56,6 +56,7 @@ UserController.prototype.requestOptions = function(app) {
  * @param app {Object} express()
  */
 UserController.prototype.userRequest = function(app) {
+    user.createAdmin();
     app.post(restConfig.prefix + "/user", user.create);
     app.post(restConfig.prefix + "/user/checkEmail", user.findByEmail);
     app.post(restConfig.prefix + "/user/login", user.login);

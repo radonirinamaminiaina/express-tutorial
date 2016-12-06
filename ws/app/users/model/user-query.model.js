@@ -46,13 +46,30 @@ var detectRequestToken = function(req, res) {
  */
 var User = function() {}
 /**
+ * createAdmin
+ * 
+ * create user admin
+ * 
+ * @param req {Object} request headers
+ * @param res {Object} response headers
+ * @param next {Function} pass to next middleware
+ */
+User.prototype.createAdmin = function(req, res) {
+    encryptePassword(config.userAdmin.passowrd, config.userAdmin.email, function(hash) {
+        config.userAdmin.passowrd = hash;
+        userModel.findOneAndUpdate({email: config.userAdmin.email}, config.userAdmin, {upsert: true, new: true, setDefaultsOnInsert: true}, function(err, result) {
+            if(err) return;
+        })
+    });
+}
+/**
  * findAll
  * 
  * Find all user
  * 
  * @param req {Object} request headers
  * @param res {Object} response headers
- * @param res {Function} pass to next middleware
+ * @param next {Function} pass to next middleware
  */
 User.prototype.findAll = function(req, res, next) {
     if(detectRequestToken(req, res)) {
@@ -76,7 +93,7 @@ User.prototype.findAll = function(req, res, next) {
  * 
  * @param req {Object} request headers
  * @param res {Object} response headers
- * @param res {Function} pass to next middleware
+ * @param next {Function} pass to next middleware
  */
 User.prototype.findById = function(req, res, next) {
     if(detectRequestToken(req, res)) {
@@ -102,7 +119,7 @@ User.prototype.findById = function(req, res, next) {
  * 
  * @param req {Object} request headers
  * @param res {Object} response headers
- * @param res {Function} pass to next middleware
+ * @param next {Function} pass to next middleware
  */
 User.prototype.findByEmail = function(req, res, next) {
     if(detectRequestToken(req, res)) {
@@ -136,7 +153,6 @@ User.prototype.findByEmail = function(req, res, next) {
  * 
  * @param req {Object} request headers
  * @param res {Object} response headers
- * @param res {Function} pass to next middleware
  */
 User.prototype.create = function(req, res) {
     if(detectRequestToken(req, res)) {
@@ -166,7 +182,6 @@ User.prototype.create = function(req, res) {
  * 
  * @param req {Object} request headers
  * @param res {Object} response headers
- * @param res {Function} pass to next middleware
  */
 User.prototype.login = function(req, res) {
     encryptePassword(req.body.passowrd, req.body.email, function(hash) {
@@ -201,7 +216,6 @@ User.prototype.login = function(req, res) {
  * 
  * @param req {Object} request headers
  * @param res {Object} response headers
- * @param res {Function} pass to next middleware
  */
 User.prototype.update = function(req, res) {
     if(detectRequestToken(req, res)) {
@@ -231,7 +245,6 @@ User.prototype.update = function(req, res) {
  * 
  * @param req {Object} request headers
  * @param res {Object} response headers
- * @param res {Function} pass to next middleware
  */
 User.prototype.delete = function(req, res) {
     if(detectRequestToken(req, res)) {
