@@ -8,7 +8,7 @@
 * Install globally nodemon to detect change: `npm install nodemon` (*Note*: You can use forever as well).
 
 ## How to run the project
-1. **Create Database and collection manually**
+**Create Database and collection manually**
 * Run `mongod.exe` into installed folder (E.g: `C:\Program Files\MongoDB\Server\3.4\bin`)
 * Create database according to the name of data base into `ws/config/config.js`
 ```javascript
@@ -40,7 +40,9 @@ d447fba346381990c226cfe0e2784133d6b20e316503c204e17a92bb96e81d5104575af56f9f000e
 })
 ```
 *Note* : I advise you to copy and pass the insertion.
-2. **Create Database and collection automatically**
+<br/>
+<br/>
+**Create Database and collection automatically**
 * Run `mongod.exe`
 * `cd client && ng serve`
 * `cd ws && nodemon`
