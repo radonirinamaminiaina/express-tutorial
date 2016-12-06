@@ -14,5 +14,8 @@
 * [http://localhost:4200/](http://localhost:4200/). <br/>
 After those command, the database and collections will be created automatically, then insert the document above into users collection.
 
+
+## Config.js
+Before starting the project, you can change the config.userAdmin according your need but keep the properties because each property matches the document into our collection. <br/>
 User login: admin@admin.com <br/>
 User password: @Dmin123
