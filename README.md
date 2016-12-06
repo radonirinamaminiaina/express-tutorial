@@ -46,8 +46,8 @@ d447fba346381990c226cfe0e2784133d6b20e316503c204e17a92bb96e81d5104575af56f9f000e
 * Run `mongod.exe`
 * `cd client && ng serve`
 * `cd ws && nodemon`
-* [http://localhost:4200/](http://localhost:4200/)
-After those command, the database and collections will be created automatically, then insert the data above into users collection.
+* [http://localhost:4200/](http://localhost:4200/). <br/>
+After those command, the database and collections will be created automatically, then insert the document above into users collection.
 
 User login: admin@admin.com <br/>
 User password: @Dmin123
