@@ -3,7 +3,7 @@
 ## Pre-requis and installation
 * [download](https://nodejs.org/en/download/) and install Nodejs,
 * [download](https://www.mongodb.com/download-center#community) and instal MongoDb,
-* [Clone](https://github.com/radonirinamaminiaina/mean-stack-user-tut.git) or [download](https://github.com/radonirinamaminiaina/mean-stack-user-tut/archive/trunk.zip) the project,
+* [Clone](https://github.com/radonirinamaminiaina/mean-stack-user-tut.git) or [download](https://github.com/radonirinamaminiaina/mean-stack-user-tut/archive/master.zip) the project,
 * Install globally angular-cli using `npm install -g angular-cli`,
 * Install globally nodemon to detect change: `npm install nodemon` (*Note*: You can use forever as well).
 
