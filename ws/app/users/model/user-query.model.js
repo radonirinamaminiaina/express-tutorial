@@ -170,7 +170,7 @@ User.prototype.create = function(req, res) {
  */
 User.prototype.login = function(req, res) {
     encryptePassword(req.body.passowrd, req.body.email, function(hash) {
-        userModel.findOne({ email: req.body.email, passowrd: hash } , {passowrd: 0}, function(err, doc) {
+        userModel.findOne({email: req.body.email, passowrd: hash } , {passowrd: 0}, function(err, doc) {
             if(err)
                 throw err;
             if(!doc) {

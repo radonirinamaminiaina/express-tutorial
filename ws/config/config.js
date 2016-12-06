@@ -1,7 +1,7 @@
 module.exports = {
     database: {
         domain: 'localhost',
-        name: 'user-database',
+        name: 'userManager',
         connect: function() {
             return 'mongodb://' + this.domain + "/" + this.name;
         }

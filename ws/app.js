@@ -20,7 +20,4 @@ app.use(methodOverride());
 
 user.init(app);
 
-process.on("SIGTERM ", function() {
-
-});
 app.listen(process.env.port || 3200);

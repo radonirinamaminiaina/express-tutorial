@@ -38,4 +38,4 @@ var userModel = new Schema({
     }
 });
 
-module.exports = mongoose.model('user', userModel);
+module.exports = mongoose.model('users', userModel);
